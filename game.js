@@ -1,3 +1,8 @@
+// for debugging purposes...
+// var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game');
+// startGame();
+
+
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game', {
     preload: preload,
     create: create,
