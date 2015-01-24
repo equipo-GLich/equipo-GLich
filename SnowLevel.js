@@ -3,6 +3,7 @@ var SnowLevel = function (game) {
 };
 
 SnowLevel.prototype.preload = function () {
+    this.input.keyboard.onDownCallback = null;
     this.world = new SnowMap(game);
     this.world.preload();
 
