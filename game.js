@@ -14,11 +14,15 @@ var logo;
 
 function preload() {
     game.load.image('logo', 'img/logo.png');
+    //game.load.audio('bgm', ['bgm/BGM_1.mp3']);
 }
 
+var music;
 function create() {
     logo = game.add.sprite(0, 0, 'logo');
     game.time.events.add(Phaser.Timer.SECOND * 2, fadeLogo, this);
+    //music = game.add.audio('bgm');
+    //music.play();
 }
 
 function update() {
