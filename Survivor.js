@@ -6,7 +6,7 @@ var Survivor = function (world, cursor) {
 };
 
 Survivor.prototype.preload = function () {
-    game.load.spritesheet('sprite', 'img/sprite/sprite.png',80, 160);
+    game.load.spritesheet('sprite', 'img/sprite/sprite.png',42, 160);
 };
 
 Survivor.prototype.create = function () {
