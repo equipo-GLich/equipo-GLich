@@ -11,8 +11,9 @@ SnowMap.prototype.preload = function () {
 SnowMap.prototype.create = function () {
     this.tilemap = this.game.add.tilemap('snowLevel', 16, 16, 1600, 800);
     this.tilemap.addTilesetImage('snow');
-    this.tilemap.floor = this.tilemap.createLayer('floor');
-    this.tilemap.floor.resizeWorld();
-    this.game.physics.arcade.enable(this.tilemap.floor);
-    this.tilemap.setCollisionByExclusion([], true, this.tilemap.floor);
+    this.floor = this.tilemap.createLayer('floor');
+    this.floor.resizeWorld();
+
+    this.game.physics.arcade.enable(this.floor);
+    this.tilemap.setCollisionByExclusion([], true, this.floor);
 };
