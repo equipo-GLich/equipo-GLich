@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="80"
+   height="160"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   inkscape:export-filename="/home/vg/project/hackaton/game/GGJ2015/equipo-GLich/img/personaje.png"
+   inkscape:export-xdpi="89.989998"
+   inkscape:export-ydpi="89.989998"
+   sodipodi:docname="New document 1">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.8421875"
+     inkscape:cx="-54.263142"
+     inkscape:cy="51.199015"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer3"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="761"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="0"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-892.36218)">
+    <rect
+       style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2985"
+       width="80"
+       height="160"
+       x="0"
+       y="892.36218"
+       rx="10"
+       ry="10" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 20.653502,918.11442 c -0.482572,0.82405 -2.824651,-0.6176 -3.442251,0 -0.2147,0.2147 0,1.81449 0,2.15141 0,0.92965 -0.403934,3.06466 0,3.87253 1.250579,2.50116 7.664928,1.37098 8.605626,0.43028 1.3528,-1.3528 0.07559,-5.59366 -1.721125,-5.59366 -0.652544,0 -2.969154,-0.76594 -3.44225,-0.86056 z"
+       id="path2991"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 63.251349,919.40526 c -2.61838,-0.94183 -2.6703,-0.34167 -4.302813,1.29085 -0.668786,0.66878 -0.430281,1.65993 -0.430281,2.58169 0,6.01665 11.517081,4.60745 4.733094,-3.87254 z"
+       id="path2993"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 30.549971,929.30173 c -0.849463,3.26276 -1.060167,12.57796 5.163376,9.46619 2.840179,-1.42009 2.581688,-5.54014 2.581688,-8.17534 0,-0.28686 -0.286855,-0.86056 0,-0.86056 0.100297,0 -0.145381,4.72723 0,5.16337 0.815771,2.44732 8.787708,7.99326 11.617594,5.16338 0.954956,-0.95496 2.548216,-9.06938 1.290844,-10.32675 -0.35996,-0.35996 -1.314355,-0.88408 -1.721125,-1.29085"
+       id="path2995"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="onion">
+    <rect
+       style="color:#000000;fill:#ffffff;fill-opacity:0.42222223;fill-rule:nonzero;stroke:#ffffff;stroke-width:5;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2999"
+       width="125.93723"
+       height="185.64885"
+       x="-20.627651"
+       y="-7.1925402"
+       rx="10"
+       ry="10" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="1" />
+</svg>
