@@ -3,7 +3,7 @@
  <tileset firstgid="1" name="snow" tilewidth="16" tileheight="16">
   <image source="../snow-tileset.png" width="16" height="16"/>
  </tileset>
- <layer name="Tile Layer 1" width="100" height="50">
+ <layer name="floor" width="100" height="50">
   <data encoding="base64" compression="zlib">
    eJzt0bENgDAQBMF3/02TAgXAYmaky/3eGQAAAADO1tsP4EKPFj1a9GhZo0mJHi16tOjRokeLHi1rNCnRo0WPFj1a9GjRo2WNJiV6tOjRokeLHi16tOjRokeLHi16tOjRokeLHi16tOjRcu+xw5667Q9/qcd+06M1PVrTozU9WtOjtS/3OADRigNP
   </data>
