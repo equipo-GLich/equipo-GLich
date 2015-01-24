@@ -8,6 +8,8 @@ SnowLevel.prototype.preload = function () {
 
     this.you = new Survivor(this.world);
     this.you.preload();
+    this.rabbit = new Rabbit(400,400, this);
+    this.rabbit.preload();
 };
 
 SnowLevel.prototype.create = function () {
@@ -18,11 +20,17 @@ SnowLevel.prototype.create = function () {
     this.cursor = game.input.keyboard.createCursorKeys();
     this.cursor.zoom = game.input.keyboard.addKey(Phaser.Keyboard.Z);
     this.you.cursor = this.cursor;
+    this.rabbit.create();
 
     game.camera.follow(this.you.sprite);
 };
 
 SnowLevel.prototype.update = function () {
     this.you.update();
-    game.camera.y += 500;
+    this.rabbit.update();
 };
+
+// SnowLevel.prototype.render = function () {
+//     // game.debug.spriteInfo(this.rabbit.sprite, 32, 32);
+//     game.debug.body(this.rabbit.sprite);
+// };
