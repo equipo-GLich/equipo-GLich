@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="100" height="50" tilewidth="16" tileheight="16">
+<map version="1.0" orientation="orthogonal" width="500" height="50" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="snow" tilewidth="16" tileheight="16">
   <image source="../snow-tileset.png" width="16" height="16"/>
  </tileset>
- <layer name="floor" width="100" height="50">
+ <layer name="floor" width="500" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt0bENgDAQBMF3/02TAgXAYmaky/3eGQAAAADO1tsP4EKPFj1a9GhZo0mJHi16tOjRokeLHi1rNCnRo0WPFj1a9GjRo2WNJiV6tOjRokeLHi16tOjRokeLHi16tOjRokeLHi16tOjRcu+xw5667Q9/qcd+06M1PVrTozU9WtOjtS/3OADRigNP
+   eJzt1UEKwlAQBcHJ/S/tXhREJU7HKui1Y/7izQAAAAAAAAAAAAAAAAAAAAAAAAAAAPANx68PAAA+Zs8BoM+eA0CfPQeAvmNsOgDU2XMA6LPnANBnzwGgz54DQJ89B4C+Y2w6ANTZcwDos+cA0GfPAaDPngNAnz0HgL5jbDoA1NlzAOiz5wDQZ88BoM+eA0CfPQeAPnsOAH32HAD67DkA9NlzAOiz5wDQZ88BoM+eA0CfPQeAPnsOAH33ey5JkiRJkq7ZLLhBkiTp1eZPf1veWb9pFtwg76tOs+CGTXdIj5oFNxRu2ppvdc3OeNczfmNz//7/fWttaxbcUG/7N9x+X+VG6Vmz4AZ5J53TLLhBunKz4AZJercbRsAP6A==
   </data>
  </layer>
 </map>

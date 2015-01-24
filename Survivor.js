@@ -1,5 +1,5 @@
 var Survivor = function (world, cursor) {
-    this.speed = 200;
+    this.speed = 150;
 
     this.world = world;
     this.cursor = cursor;
@@ -29,4 +29,5 @@ Survivor.prototype.update = function () {
         this.sprite.body.velocity.x = -this.speed;
         this.sprite.scale.set(-1,1);
     }
+
 };
