@@ -17,8 +17,14 @@ SnowLevel.prototype.preload = function () {
     this.you = new Survivor(this.world, 150, 400);
     this.you.preload();
 
+    this.buddy = new Buddy(this.world, 300, 500, this.you);
+    this.buddy.preload();
+
     this.rabbit = new Rabbit(400,400, this);
     this.rabbit.preload();
+
+    this.r2 = new Rabbit(200,200, this);
+    this.r2.preload();
 
     game.load.spritesheet('stone', 'img/sprite/stone.png', 40,40);
     game.load.image('trees-back', 'img/trees-back.png');
@@ -39,12 +45,16 @@ SnowLevel.prototype.create = function () {
     game.stage.backgroundColor = '#eee';
 
     this.you.create();
+    this.buddy.create();
 
     this.cursor = game.input.keyboard.createCursorKeys();
     this.cursor.zoom = game.input.keyboard.addKey(Phaser.Keyboard.Z);
     this.cursor.throwStone = game.input.keyboard.addKey(Phaser.Keyboard.A);
+
     this.you.cursor = this.cursor;
+    this.buddy.cursor = this.cursor;
     this.rabbit.create();
+    this.r2.create();
     this.stone = new Stone(this);
 
     game.camera.follow(this.you.sprite);
@@ -55,8 +65,12 @@ SnowLevel.prototype.update = function () {
     // treesMid.tilePosition.x -= 1.2;
     // treesFront.tilePosition.x -= 1.5;
     this.stone.update();
+
     this.you.update();
+    this.buddy.update();
+
     this.rabbit.update();
+    this.r2.update();
     this.stone.update();
 
     if (this.cursor.throwStone.isDown) {

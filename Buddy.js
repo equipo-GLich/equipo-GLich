@@ -1,4 +1,5 @@
-var Survivor = function (world, spawnX, spawnY) {
+var Buddy = function (world, spawnX, spawnY, you) {
+    this.you = you;
     this.speed = 150;
     this.jumpPower = 190;
     this.world = world;
@@ -6,14 +7,15 @@ var Survivor = function (world, spawnX, spawnY) {
     this.spawnY = spawnY;
 };
 
-Survivor.prototype.preload = function () {
+Buddy.prototype.preload = function () {
     game.load.atlasJSONHash('survivor', 'img/sprite/chracter1.png', 'img/sprite/character1.json');
     game.load.audio('stepsfx', ['sfx/snow_step.wav']);
 };
 
 var stepsfx;
-Survivor.prototype.create = function () {
+Buddy.prototype.create = function () {
     this.sprite = game.add.sprite(this.spawnX, this.spawnY, 'survivor', 'c-jump1.png');
+    // this.sprite.tint = 0x775555;
     var jumpFrames = framesBetween(1,3, 'c-jump').concat(['c-jump4.png', 'c-jump4.png', 'c-jump4.png']).concat(framesBetween(4,8, 'c-jump'));
     // this.sprite.animations.add('jump', framesBetween(1,8, 'c-jump'), 7, false);
     this.sprite.animations.add('jump', jumpFrames, 10, false);
@@ -22,18 +24,20 @@ Survivor.prototype.create = function () {
     this.sprite.animations.add('stand', framesBetween(1,4, 'c-stand'), 8, true);
     this.sprite.animations.add('walk', framesBetween(1, 8, 'c-walk'), 8, true);
 
-    this.sprite.animations.play('stand');
+    this.sprite.animations.play('fall');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.acceleration.y = 481;
     this.sprite.anchor.set(1/2, 1/2);
+    this.sprite.scale.set(1.5, 1.5);
+    this.sprite.smoothed = false;
     stepsfx = game.add.audio('stepsfx');
 };
 
-Survivor.prototype.looks = function (action) {
+Buddy.prototype.looks = function (action) {
     return this.sprite.animations.currentAnim.name == action;
 };
 
-Survivor.prototype.update = function () {
+Buddy.prototype.update = function () {
     game.physics.arcade.collide(this.world.floor, this.sprite);
 
     if (this.sprite.body.blocked.down) {
@@ -43,33 +47,22 @@ Survivor.prototype.update = function () {
         }
 
         this.sprite.body.velocity.x = 0;
-        if (this.cursor.right.isDown) {
-            this.sprite.animations.play('walk');
-            this.sprite.body.velocity.x = this.speed;
-            this.sprite.scale.set(1,1);
-            playStepSFX();
-        }
+        var myPosition = [this.sprite.x, this.sprite.y];
+        var yourPosition = [this.you.sprite.x, this.you.sprite.y];
 
-        if (this.cursor.left.isDown) {
-            this.sprite.animations.play('walk');
-            this.sprite.body.velocity.x = -this.speed;
-            this.sprite.scale.set(-1,1);
+        if (Dot.distance(myPosition, yourPosition) > 100) {
+            // I'm going to follow you.
             playStepSFX();
-        }
-
-        if (!this.cursor.left.isDown && !this.cursor.right.isDown) {
-            this.sprite.animations.play('stand');
-            if (treesBack && treesMid && treesFront) {
-                treesBack.tilePosition.x -= 0;
-                treesMid.tilePosition.x -= 0;
-                treesFront.tilePosition.x -= 0;
+            this.sprite.animations.play('walk');
+            if (myPosition[X] < yourPosition[X]) {
+                this.sprite.body.velocity.x = this.speed;
+                this.sprite.scale.set(Math.abs(this.sprite.scale.x),this.sprite.scale.y);
+            } else {
+                this.sprite.body.velocity.x = -this.speed;
+                this.sprite.scale.set(-Math.abs(this.sprite.scale.x),this.sprite.scale.y);
             }
         } else {
-            if (treesBack && treesMid && treesFront) {
-                treesBack.tilePosition.x -= paralaxSpeed[0] * this.sprite.scale.x;
-                treesMid.tilePosition.x -=  paralaxSpeed[1] * this.sprite.scale.x;
-                treesFront.tilePosition.x -=  paralaxSpeed[2] * this.sprite.scale.x;
-            }
+            this.sprite.animations.play('stand');
         }
 
         if (this.cursor.up.isDown) {
