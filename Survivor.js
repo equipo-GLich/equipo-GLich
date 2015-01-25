@@ -6,13 +6,20 @@ var Survivor = function (world, cursor) {
 };
 
 Survivor.prototype.preload = function () {
-    game.load.spritesheet('sprite', 'img/sprite/sprite.png',42, 160);
+    game.load.atlas('survivor', 'img/sprite/character1.png', 'img/sprite/character1.json');
     game.load.audio('stepsfx', ['sfx/snow_step.wav']);
 };
 
 var stepsfx;
 Survivor.prototype.create = function () {
-    this.sprite = game.add.sprite(150, 400, 'sprite');
+    this.sprite = game.add.sprite(150, 400, 'survivor');
+
+    // this.sprite.animations.add('jump', [0,1,2,3,4,4,4,5,6,7], 10, true);
+    // this.sprite.animations.add('run', [10,11,12,13,14,15,16], 16, true);
+    // this.sprite.animations.add('stop', [17,18,19], 3, true);
+    // this.sprite.animations.add('stand', [
+
+    // this.sprite.animations.play('jump');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.acceleration.y = 481;
     this.sprite.anchor.set(1/2, 1/2);

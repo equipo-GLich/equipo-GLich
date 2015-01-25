@@ -30,24 +30,19 @@ SnowLevel.prototype.create = function () {
     this.cursor.throwStone = game.input.keyboard.addKey(Phaser.Keyboard.A);
     this.you.cursor = this.cursor;
     this.rabbit.create();
-    stone = new Stone(this);
+    this.stone = new Stone(this);
 
     game.camera.follow(this.you.sprite);
 };
 
 SnowLevel.prototype.update = function () {
+    this.stone.update();
     this.you.update();
     this.rabbit.update();
-    stone.update();
+    this.stone.update();
 
     if (this.cursor.throwStone.isDown) {
-        console.log('ding');
-        x = false;
-        stone.sprite.x = 300;
-        stone.sprite.y = 300;
-    } else {
-        stone.sprite.x = 100;
-        stone.sprite.y = 100;
+        this.stone.throwAway();
     }
 };
 
