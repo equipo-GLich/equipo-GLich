@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="500" height="50" tilewidth="16" tileheight="16">
  <tileset firstgid="1" name="snow" tilewidth="16" tileheight="16">
-  <image source="../snow-tileset.png" width="16" height="16"/>
+  <image source="snow.png" width="48" height="16"/>
  </tileset>
  <layer name="floor" width="500" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1UEKwlAQBcHJ/S/tXhREJU7HKui1Y/7izQAAAAAAAAAAAAAAAAAAAAAAAAAAAPANx68PAAA+Zs8BoM+eA0CfPQeAvmNsOgDU2XMA6LPnANBnzwGgz54DQJ89B4C+Y2w6ANTZcwDos+cA0GfPAaDPngNAnz0HgL5jbDoA1NlzAOiz5wDQZ88BoM+eA0CfPQeAPnsOAH32HAD67DkA9NlzAOiz5wDQZ88BoM+eA0CfPQeAPnsOAH33ey5JkiRJkq7ZLLhBkiTp1eZPf1veWb9pFtwg76tOs+CGTXdIj5oFNxRu2ppvdc3OeNczfmNz//7/fWttaxbcUG/7N9x+X+VG6Vmz4AZ5J53TLLhBunKz4AZJercbRsAP6A==
+   eJzt2UFywyAMQNE09z90Vt1kBhtHBiT83szfOxRQ4r5eAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABk8NcIAMinNbffjcx5AFijNYOP5vbVzHkAuMfomX3XnJ/p6LuM7xsArJRxbq/8LR95/2DOU9XZd9Wqe/rq59rlc7OvGe/Is/XrGRyxJu4GZojMqbv29Or9Pfp+y/AZeYanzeze83d1DWc+m7uBf9HfjqvP2tn+HrHfV6+B88sdKpznDGWe5627gT1Un8ez9vsvMz/jmjm/9Hr62Y+es941Xv2sGe+FTO9TMzGf552FSmub9X8RGUXeR1VTZf9mr9o877kXZjjbe7udt2/mtUYVmWMjz1b0ua4WWcPs3Bfjzk7v+q9+1iufacQ9cOf+m303ZLprpJHZ8/G7boSqa1mpHed5ZC12Oc+S1Cr63aaH+3Pd37bnb7P6OSVJ69vtfcZOmeeSJNXvbJ6b5ZIk5c88lyRpj45munkuSVKNzHNJ2qMPYBInOQ==
   </data>
  </layer>
 </map>

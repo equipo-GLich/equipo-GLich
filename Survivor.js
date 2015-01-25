@@ -37,7 +37,7 @@ Survivor.prototype.update = function () {
 
     if (this.sprite.body.blocked.down) {
 
-        if (this.sprite.body.blocked.right) {
+        if (this.sprite.body.blocked.right || this.sprite.body.blocked.left) {
             this.sprite.body.position.y -= 16;
         }
 

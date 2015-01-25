@@ -4,7 +4,7 @@ var SnowMap = function (game) {
 
 SnowMap.prototype.preload = function () {
     this.game.load.tilemap( 'snow', 'img/map/snow.json', null, Phaser.Tilemap.TILED_JSON );
-    this.game.load.image( 'snow', 'img/snow-tileset.png' );
+    this.game.load.image( 'snow', 'img/map/snow.png' );
 };
 
 

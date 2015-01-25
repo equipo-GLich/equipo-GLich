@@ -42,6 +42,7 @@ Rabbit.prototype.create = function () {
 
         this.sprite.animations.play('alert');
         game.physics.arcade.enable(this.sprite);
+        // this.sprite.setSize(0.5*
         this.sprite.body.acceleration.y = 481;
     } else {
         this.sprite.reset(this.spawnX, this.spawnY);
@@ -70,11 +71,18 @@ Rabbit.prototype.update = function () {
         this.state = this.scared;
     }
 
+    if (this.sprite.body.blocked.right) {
+        this.sprite.position.y -= 16;
+        this.sprite.body.velocity.x = this.state.speed * this.sprite.scale.x*-1;
+    }
+
 };
 
 Rabbit.prototype.jump = function () {
     var direction;
     var modifier = 1;
+
+
 
     this.sprite.animations.play('walk');
     if (this.state == this.scared) {
@@ -98,4 +106,5 @@ Rabbit.prototype.jump = function () {
     } else {
         this.sprite.scale.set(-1,1);
     }
+
 };
