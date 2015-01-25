@@ -72,7 +72,7 @@ IntroGame.prototype.create = function() {
     juan = game.add.sprite(500, 200, 'juan');
     juan.scale.x = 1/3;
     juan.scale.y = 1/3;
-    pressAnyButton = game.add.sprite(250, 350, 'press-any-button');
+    pressAnyButton = game.add.sprite(250, 600, 'press-any-button');
     // Read any key
     this.input.keyboard.onDownCallback = function(e) {
         // Start game
