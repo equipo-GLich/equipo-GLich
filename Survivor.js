@@ -1,18 +1,44 @@
 var Survivor = function (world, spawnX, spawnY) {
+    this.monster = null;
     this.speed = 150;
     this.jumpPower = 190;
     this.world = world;
     this.spawnX = spawnX;
     this.spawnY = spawnY;
-    this.hunger = 50000;
+    this.hunger = 700;
+    this.scared = false;
 };
 
 Survivor.prototype.preload = function () {
     game.load.atlasJSONHash('survivor', 'img/sprite/character1.png', 'img/sprite/character1.json');
     game.load.audio('stepsfx', ['sfx/snow_step.wav']);
-    game.load.audio('jumpSFX', ['sfx/snow_jump.wav']);
-    game.load.audio('deathsfx',['sfx/player_death.wav']);
 };
+
+Survivor.prototype.shoot = function () {
+    this.sprite.animations.play('calmly-shoot');
+};
+
+Survivor.prototype.finalShoot = function () {
+    this.sprite.animations.play('crazy-shoot');
+};
+
+Survivor.prototype.ohno = function (monster) {
+    var d = this.sprite.x - monster.sprite.x;
+
+    this.scared = true;
+    this.monster = monster;
+    this.sprite.animations.play('walk', 2, true);
+
+    if (d < 0) {
+        this.sprite.scale.set(1,1);
+    } else {
+        this.sprite.scale.set(-1,1);
+    }
+
+    this.sprite.body.velocity.x = (this.speed/10) *this.sprite.scale.x *-1
+};
+
+
 
 var stepsfx;
 Survivor.prototype.create = function () {
@@ -24,15 +50,15 @@ Survivor.prototype.create = function () {
     this.sprite.animations.add('run', framesBetween(1,9, 'c-run'), 15, true);
     this.sprite.animations.add('stand', framesBetween(1,4, 'c-stand'), 8, true);
     this.sprite.animations.add('walk', framesBetween(1, 8, 'c-walk'), 8, true);
-    this.sprite.animations.add('die', framesBetween(1,4, 'c-die'), 2, false);
+    this.sprite.animations.add('die', framesBetween(2,4, 'c-die'), 2, false);
+    this.sprite.animations.add('calmly-shoot', framesBetween(1,4, 'c-shoot'), 4, false);
+    this.sprite.animations.add('crazy-shoot', ['c-shoot1.png', 'c-shoot2.png', 'c-shoot1.png', 'c-shoot2.png', 'c-shoot1.png', 'c-shoot2.png', 'c-shoot1.png', 'c-shoot2.png', 'c-shoot1.png', 'c-shoot2.png', 'c-shoot1.png', 'c-shoot1.png', 'c-shoot2.png', 'c-shoot1.png', 'c-shoot2.png', 'c-shoot1.png', 'c-shoot2.png', 'c-shoot1.png', 'c-shoot2.png', 'c-shoot1.png', 'c-shoot2.png', 'c-shoot1.png', 'c-shoot2.png', 'c-shoot3.png', 'c-shoot4.png', 'c-shoot1.png', 'c-shoot1.png', 'c-shoot1.png', 'c-shoot1.png', 'c-shoot1.png', 'c-shoot1.png', 'c-shoot1.png', 'c-shoot1.png'], 12, false);
 
     this.sprite.animations.play('stand');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.acceleration.y = 481;
     this.sprite.anchor.set(1/2, 1/2);
     stepsfx = game.add.audio('stepsfx');
-    jumpSFX = game.add.audio('jumpSFX');
-    deathSFX = game.add.audio('deathsfx');
 };
 
 Survivor.prototype.looks = function (action) {
@@ -44,13 +70,25 @@ Survivor.prototype.die = function () {
     this.sprite.position.y += this.sprite.height*.5;
     this.sprite.animations.play('die');
     this.sprite.body.velocity.x = 0;
-    playDeathSFX();
 };
 
 
 Survivor.prototype.update = function () {
     game.physics.arcade.collide(this.world.floor, this.sprite);
-    if (!this.looks('die')) {
+
+    if (this.scared && !this.looks('die')) {
+        if (this.monster.sprite.animations.currentAnim.currentFrame.name == 'c-shoot4.png') {
+            this.die();
+        }
+    }
+
+    if (!this.scared && !this.looks('die') &&
+        !((this.looks('calmly-shoot') || this.looks('crazy-shoot'))
+           && this.sprite.animations.currentAnim.isPlaying)) {
+
+        if (this.cursor.attack.isDown) {
+            this.finalShoot();
+        }
 
         if (this.hunger <= 0) {
             this.die();
@@ -98,7 +136,6 @@ Survivor.prototype.update = function () {
                     this.sprite.body.velocity.y = -this.jumpPower;
                     this.sprite.body.velocity.x = this.speed*2 * this.sprite.scale.x;
                     this.sprite.animations.play('jump');
-                    playJumpSFX();
                 }
 
             }
@@ -120,20 +157,5 @@ Survivor.prototype.update = function () {
 playStepSFX = function () {
     if (!stepsfx.isPlaying){
         stepsfx.play();
-    }
-}
-
-playJumpSFX = function() {
-    if(!jumpSFX.isPlaying){
-        jumpSFX.play();
-    }
-    else{
-        jumpSFX.restart();
-    }
-}
-
-playDeathSFX = function(){
-    if (!deathSFX.isPlaying){
-        deathSFX.play();
     }
 }

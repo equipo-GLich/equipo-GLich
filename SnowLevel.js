@@ -53,6 +53,7 @@ SnowLevel.prototype.create = function () {
     this.cursor = game.input.keyboard.createCursorKeys();
     this.cursor.zoom = game.input.keyboard.addKey(Phaser.Keyboard.Z);
     this.cursor.throwStone = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    this.cursor.attack = game.input.keyboard.addKey(Phaser.Keyboard.A);
 
     this.you.cursor = this.cursor;
     this.buddy.cursor = this.cursor;
