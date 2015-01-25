@@ -1,4 +1,5 @@
 var x = true;
+var nextLevelCounter = 0;
 var paralaxSpeed = [1, 1.2, 1.5];
 
 var SnowLevel = function (game) {
@@ -16,10 +17,10 @@ SnowLevel.prototype.preload = function () {
     this.world = new SnowMap(game);
     this.world.preload();
 
-    this.you = new Survivor(this.world, 150, 400);
+    this.you = new Survivor(this.world, 400, 500);
     this.you.preload();
 
-    this.buddy = new Buddy(this.world, 300, 500, this.you);
+    this.buddy = new Buddy(this.world, 100, 500, this.you);
     this.buddy.preload();
 
     //Create bunny array
@@ -93,8 +94,15 @@ SnowLevel.prototype.update = function () {
     this.r2.update();
     this.stone.update();
 
-    if (this.cursor.throwStone.isDown) {
-        this.stone.throwAway();
+    if (this.you.sprite.x > 234*16) {
+        this.world.landslide();
+        nextLevelCounter++;
+    }
+
+    if (nextLevelCounter >= 100) {
+        caveLevel = new CaveLevel(this.you.hunger);
+        game.state.add('caveLevel', caveLevel);
+        game.state.start('caveLevel');
     }
 };
 

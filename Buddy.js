@@ -1,5 +1,6 @@
 var Buddy = function (world, spawnX, spawnY, you) {
-    this.maxDistance = 200;
+    this.frenzy = false;
+    this.maxDistance = 150;
     this.you = you;
     this.speed = 150;
     this.jumpPower = 190;
@@ -7,6 +8,22 @@ var Buddy = function (world, spawnX, spawnY, you) {
     this.spawnX = spawnX;
     this.spawnY = spawnY;
 };
+
+Buddy.prototype.finalShoot = function () {
+    this.frenzy = true;
+    this.sprite.animations.play('crazy-shoot');
+
+    var d = this.sprite.x - this.you.sprite.x;
+
+    if (d < 0) {
+        this.sprite.scale.set(1,1);
+    } else {
+        this.sprite.scale.set(-1,1);
+    }
+
+    this.you.ohno(this);
+};
+
 
 Buddy.prototype.preload = function () {
     game.load.atlasJSONHash('buddy', 'img/sprite/character2.png', 'img/sprite/character2.json');
@@ -25,6 +42,8 @@ Buddy.prototype.create = function () {
     this.sprite.animations.add('run', framesBetween(1,9, 'c2-run'), 15, true);
     this.sprite.animations.add('stand', framesBetween(1,4, 'c2-stand'), 8, true);
     this.sprite.animations.add('walk', framesBetween(1, 8, 'c2-walk'), 8, true);
+    this.sprite.animations.add('calmly-shoot', framesBetween(1,4, 'c2-shoot'), 4, false);
+    this.sprite.animations.add('crazy-shoot', ['c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot3.png', 'c2-shoot4.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png'], 12, false);
 
     this.sprite.animations.play('fall');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
@@ -44,44 +63,44 @@ Buddy.prototype.looks = function (action) {
 Buddy.prototype.update = function () {
     game.physics.arcade.collide(this.world.floor, this.sprite);
 
-    if (this.sprite.body.blocked.down) {
+    if (!this.frenzy) {
+        if (this.sprite.body.blocked.down) {
 
-        if (this.sprite.body.blocked.right || this.sprite.body.blocked.left) {
-            this.sprite.body.position.y -= 16;
-        }
-
-        this.sprite.body.velocity.x = 0;
-        var myPosition = [this.sprite.x, this.sprite.y];
-        var yourPosition = [this.you.sprite.x, this.you.sprite.y];
-
-        if (Dot.distance(myPosition, yourPosition) > this.maxDistance) {
-            // I'm going to follow you.
-            playStepSFX();
-            this.sprite.animations.play('walk');
-            if (myPosition[X] < yourPosition[X]) {
-                this.sprite.body.velocity.x = this.speed;
-                this.sprite.scale.set(Math.abs(this.sprite.scale.x),this.sprite.scale.y);
-            } else {
-                this.sprite.body.velocity.x = -this.speed;
-                this.sprite.scale.set(-Math.abs(this.sprite.scale.x),this.sprite.scale.y);
+            if (this.sprite.body.blocked.right || this.sprite.body.blocked.left) {
+                this.sprite.body.position.y -= 16;
             }
-        } else {
-            this.sprite.animations.play('stand');
+
+            this.sprite.body.velocity.x = 0;
+            var myPosition = [this.sprite.x, this.sprite.y];
+            var yourPosition = [this.you.sprite.x, this.you.sprite.y];
+
+            if (Dot.distance(myPosition, yourPosition) > this.maxDistance) {
+                // I'm going to follow you.
+                playStepSFX();
+                this.sprite.animations.play('walk');
+                if (myPosition[X] < yourPosition[X]) {
+                    this.sprite.body.velocity.x = this.speed;
+                    this.sprite.scale.set(Math.abs(this.sprite.scale.x),this.sprite.scale.y);
+                } else {
+                    this.sprite.body.velocity.x = -this.speed;
+                    this.sprite.scale.set(-Math.abs(this.sprite.scale.x),this.sprite.scale.y);
+                }
+            } else {
+                this.sprite.animations.play('stand');
+            }
+
+            if (this.shouldJump()) {
+                this.sprite.body.velocity.y = -this.jumpPower;
+                this.sprite.body.velocity.x = this.speed*2 * this.sprite.scale.x;
+                this.sprite.animations.play('jump');
+                playJumpSFX();
+            }
+
+            if (this.sprite.body.velocity.y > 120 && !this.looks('jump')) {
+                this.sprite.animations.play('fall');
+            }
         }
-
-        if (this.shouldJump()) {
-            this.sprite.body.velocity.y = -this.jumpPower;
-            this.sprite.body.velocity.x = this.speed*2 * this.sprite.scale.x;
-            this.sprite.animations.play('jump');
-            playJumpSFX();
-        }
-
     }
-
-    if (this.sprite.body.velocity.y > 120 && !this.looks('jump')) {
-        this.sprite.animations.play('fall');
-    }
-
 };
 
 Buddy.prototype.shouldJump = function () {

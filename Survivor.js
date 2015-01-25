@@ -5,7 +5,7 @@ var Survivor = function (world, spawnX, spawnY) {
     this.world = world;
     this.spawnX = spawnX;
     this.spawnY = spawnY;
-    this.hunger = 9000;
+    this.hunger = 3000;
     this.scared = false;
 };
 
@@ -83,7 +83,7 @@ Survivor.prototype.update = function () {
     game.physics.arcade.collide(this.world.floor, this.sprite);
 
     if (this.scared && !this.looks('die')) {
-        if (this.monster.sprite.animations.currentAnim.currentFrame.name == 'c-shoot4.png') {
+        if (this.monster.sprite.animations.currentAnim.currentFrame.name == 'c2-shoot4.png') {
             this.die();
         }
     }
@@ -130,12 +130,6 @@ Survivor.prototype.update = function () {
                         treesMid.tilePosition.x -= 0;
                         treesFront.tilePosition.x -= 0;
                     }
-                } else {
-                    if (treesBack && treesMid && treesFront) {
-                        treesBack.tilePosition.x -= paralaxSpeed[0] * this.sprite.scale.x;
-                        treesMid.tilePosition.x -=  paralaxSpeed[1] * this.sprite.scale.x;
-                        treesFront.tilePosition.x -=  paralaxSpeed[2] * this.sprite.scale.x;
-                    }
                 }
 
                 if (this.cursor.up.isDown) {
@@ -157,6 +151,13 @@ Survivor.prototype.update = function () {
                 this.hunger -= 5;
             }
         }
+    }
+
+    if (treesBack && treesMid && treesFront &&
+        this.sprite.body.velocity.x != 0) {
+        treesBack.tilePosition.x -= paralaxSpeed[0] * this.sprite.scale.x;
+        treesMid.tilePosition.x -=  paralaxSpeed[1] * this.sprite.scale.x;
+        treesFront.tilePosition.x -=  paralaxSpeed[2] * this.sprite.scale.x;
     }
 
 };

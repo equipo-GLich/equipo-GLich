@@ -1,5 +1,5 @@
-var CaveLevel = function () {
-
+var CaveLevel = function (hunger) {
+    this.hunger = hunger;
 };
 
 CaveLevel.prototype.preload = function () {
@@ -17,6 +17,7 @@ CaveLevel.prototype.create = function () {
     this.world.create();
 
     this.you.create();
+    this.you.hunger = this.hunger;
     this.buddy.create();
 
     cursor = game.input.keyboard.createCursorKeys();

@@ -15,17 +15,22 @@ SnowMap.prototype.create = function () {
     this.floor.resizeWorld();
 
     this.game.physics.arcade.enable(this.floor);
-    this.tilemap.setCollisionByExclusion([], true, this.floor);
+    this.tilemap.setCollisionByExclusion([3,4], true, this.floor);
 };
 
 SnowMap.prototype.landslide = function () {
     this.landslides = game.add.group();
-    this.tilemap.createFromTiles([3,4], -1, 'landslide', this.landslides, this.floor);
+    this.tilemap.createFromTiles(3, -1, 'landslide', this.floor, this.landslides);
+    this.tilemap.createFromTiles(4, -1, 'landslide', this.floor, this.landslides);
+
     this.landslides.forEach( function (sprite) {
         sprite.animations.add('collapse', [2,3,4,5], 5, false);
-        sprite.update = function () {
-
-        };
+        sprite.animations.play('collapse');
+        // sprite.update = function () {
+        //     if (sprite.animations.currentAnim.isPlaying) {
+        //         sprite.kill();
+        //     }
+        // };
     });
 
 };

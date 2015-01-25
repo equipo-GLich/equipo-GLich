@@ -77,6 +77,7 @@ IntroGame.prototype.create = function() {
     this.input.keyboard.onDownCallback = function(e) {
         // Start game
         snowLevel = new SnowLevel(game);
+        sl = snowLevel;
         game.state.add('snow', snowLevel);
         game.state.start('snow');
         music = game.add.audio('bgm');
