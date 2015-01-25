@@ -27,12 +27,16 @@ var Rabbit = function (x, y, level) {
 };
 
 Rabbit.prototype.preload = function () {
-    game.load.spritesheet('rabbit', 'img/sprite/rabbit.png', 40,60);
+    game.load.atlasJSONHash('rabbit', 'img/sprite/rabbit.png', 'img/sprite/rabbit.json');
 };
 
 Rabbit.prototype.create = function () {
     if (!this.sprite) {
-        this.sprite = game.add.sprite(this.spawnX, this.spawnY, 'rabbit');
+        this.sprite = game.add.sprite(this.spawnX, this.spawnY, 'rabbit', 'r-alert1.png');
+        // rabbit animation
+        this.sprite.animations.add('alert', framesBetween(1,2, 'r-alert'), 3, true);
+        this.sprite.animations.add('walk', framesBetween(3,5, 'r-walk'), 6, true);
+        this.sprite.animations.play('alert');
         game.physics.arcade.enable(this.sprite);
         this.sprite.body.acceleration.y = 481;
     } else {
@@ -65,7 +69,7 @@ Rabbit.prototype.update = function () {
 
 Rabbit.prototype.jump = function () {
     var direction;
-
+    this.sprite.animations.play('walk');
     if (this.state == this.scared) {
         direction = randomBetween(-1,5);
         if (direction <= 0) {
@@ -73,9 +77,11 @@ Rabbit.prototype.jump = function () {
             this.state.iddleCounter = this.state.iddleLimit;
             this.sprite.body.velocity.y = -this.state.jumpForce * .6;
             this.sprite.body.velocity.x = this.state.speed * direction * .6;
+            this.sprite.scale.set(1,1);
         }
     } else {
         direction = randomBetween(-1,1);
+        this.sprite.scale.set(-1,1);
     }
 
     this.sprite.body.velocity.y = -this.state.jumpForce;
