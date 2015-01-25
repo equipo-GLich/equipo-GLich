@@ -4,6 +4,10 @@ var SnowLevel = function (game) {
     this.game = game;
 };
 
+var treesBack;
+var treesMid;
+var treesFront;
+
 SnowLevel.prototype.preload = function () {
     this.input.keyboard.onDownCallback = null;
     this.world = new SnowMap(game);
@@ -16,9 +20,15 @@ SnowLevel.prototype.preload = function () {
     this.rabbit.preload();
 
     game.load.spritesheet('stone', 'img/sprite/stone.png', 40,40);
+    game.load.image('trees-back', 'img/trees-back.png');
+    game.load.image('trees-mid', 'img/trees-mid.png');
+    game.load.image('trees-front', 'img/trees-front.png');
 };
 
 SnowLevel.prototype.create = function () {
+    treesBack = game.add.tileSprite(0, 150, 1280, 557, 'trees-back');
+    treesMid = game.add.tileSprite(0, 150, 1280, 545, 'trees-mid');
+    treesFront = game.add.tileSprite(0, 150, 1280, 533, 'trees-front');
     game.physics.startSystem(Phaser.Physics.ARCADE);
     this.world.create();
     game.stage.backgroundColor = '#eee';
@@ -36,6 +46,9 @@ SnowLevel.prototype.create = function () {
 };
 
 SnowLevel.prototype.update = function () {
+    treesBack.tilePosition.x -= 1;
+    treesMid.tilePosition.x -= 1.2;
+    treesFront.tilePosition.x -= 1.5;
     this.stone.update();
     this.you.update();
     this.rabbit.update();
