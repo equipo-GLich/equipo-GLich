@@ -65,9 +65,9 @@ SnowLevel.prototype.create = function () {
 };
 
 SnowLevel.prototype.update = function () {
-    // treesBack.tilePosition.x -= 1;
-    // treesMid.tilePosition.x -= 1.2;
-    // treesFront.tilePosition.x -= 1.5;
+    if (!this.you.sprite.alive) {
+        this.you.sprite.reset(300,300);
+    }
     this.stone.update();
 
     this.you.update();
