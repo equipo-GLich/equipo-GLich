@@ -13,6 +13,7 @@ Survivor.prototype.preload = function () {
     game.load.atlasJSONHash('survivor', 'img/sprite/character1.png', 'img/sprite/character1.json');
     game.load.audio('stepsfx', ['sfx/snow_step.wav']);
     game.load.audio('jumpsfx', ['sfx/snow_jump.wav']);
+    game.load.audio('deathsfx', ['sfx/player_death.wav']);
 };
 
 Survivor.prototype.shoot = function () {
@@ -61,6 +62,7 @@ Survivor.prototype.create = function () {
     this.sprite.anchor.set(1/2, 1/2);
     stepsfx = game.add.audio('stepsfx');
     jumpsfx = game.add.audio('jumpsfx');
+    deathsfx = game.add.audio('deathsfx');
 };
 
 Survivor.prototype.looks = function (action) {
@@ -72,6 +74,7 @@ Survivor.prototype.die = function () {
     this.sprite.position.y += this.sprite.height*.5;
     this.sprite.animations.play('die');
     this.sprite.body.velocity.x = 0;
+    playDeathSFX();
 };
 
 
@@ -169,5 +172,11 @@ playJumpSFX = function() {
     }
     else{
         jumpsfx.restart();
+    }
+}
+
+playDeathSFX = function(){
+    if(!deathsfx.isPlaying){
+        deathsfx.play();
     }
 }
