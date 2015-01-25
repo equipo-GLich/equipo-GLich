@@ -1,6 +1,10 @@
 var X=0, Y=1;
 
 var Dot = ( function () {
+    var scalarProduct = function (v, scalar) {
+        return [v[0]*scalar, v[1]*scalar];
+    };
+
     var distance = function (origin, destiny) {
         return magnitude(minus(origin, destiny));
     };
@@ -28,7 +32,8 @@ var Dot = ( function () {
         minus : minus,
         magnitude : magnitude,
         unitVector : unitVector,
-        distance : distance
+        distance : distance,
+        scalarProduct : scalarProduct
     };
 
 })();

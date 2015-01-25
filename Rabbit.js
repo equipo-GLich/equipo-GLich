@@ -45,7 +45,7 @@ Rabbit.prototype.update = function () {
     this.state.iddleCounter++;
 
     if (this.state.iddleCounter >= this.state.iddleLimit &&
-        // this prevents the rabbit jump in the air.
+        // this prevents the rabbit jumping in the air.
         this.sprite.body.blocked.down) {
         this.state.iddleCounter = 0;
 

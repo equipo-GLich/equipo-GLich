@@ -1,6 +1,8 @@
-// for debugging purposes...
+// // for debugging purposes...
 // var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game');
-// startGame();
+// var sl = new SnowLevel(game);
+// game.state.add('sl', sl);
+// game.state.start('sl');
 
 
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game', {
