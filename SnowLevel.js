@@ -33,6 +33,7 @@ SnowLevel.prototype.preload = function () {
 };
 
 SnowLevel.prototype.create = function () {
+
     treesBack = game.add.tileSprite(0, 150, 1280, 557, 'trees-back');
     treesBack.fixedToCamera = true;
     treesMid = game.add.tileSprite(0, 150, 1280, 545, 'trees-mid');
@@ -46,6 +47,8 @@ SnowLevel.prototype.create = function () {
 
     this.you.create();
     this.buddy.create();
+    this.you.hungerMeter = new HungerMeter(this.you, 100,100);
+    this.you.hungerMeter.create();
 
     this.cursor = game.input.keyboard.createCursorKeys();
     this.cursor.zoom = game.input.keyboard.addKey(Phaser.Keyboard.Z);
@@ -67,6 +70,7 @@ SnowLevel.prototype.update = function () {
     this.stone.update();
 
     this.you.update();
+    this.you.hungerMeter.update();
     this.buddy.update();
 
     this.rabbit.update();

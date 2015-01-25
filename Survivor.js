@@ -4,8 +4,7 @@ var Survivor = function (world, spawnX, spawnY) {
     this.world = world;
     this.spawnX = spawnX;
     this.spawnY = spawnY;
-    this.maxHunger = 5000;
-    this.hunger = 0;
+    this.hunger = 50000;
 };
 
 Survivor.prototype.preload = function () {
@@ -23,6 +22,7 @@ Survivor.prototype.create = function () {
     this.sprite.animations.add('run', framesBetween(1,9, 'c-run'), 15, true);
     this.sprite.animations.add('stand', framesBetween(1,4, 'c-stand'), 8, true);
     this.sprite.animations.add('walk', framesBetween(1, 8, 'c-walk'), 8, true);
+    this.sprite.animations.add('die', framesBetween(1,4, 'c-die'), 2, false);
 
     this.sprite.animations.play('stand');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
@@ -35,56 +35,78 @@ Survivor.prototype.looks = function (action) {
     return this.sprite.animations.currentAnim.name == action;
 };
 
+Survivor.prototype.die = function () {
+    this.sprite.anchor.set(0,1);
+    this.sprite.position.y += this.sprite.height*.5;
+    this.sprite.animations.play('die');
+    this.sprite.body.velocity.x = 0;
+};
+
+
 Survivor.prototype.update = function () {
-    this.hunger++;
     game.physics.arcade.collide(this.world.floor, this.sprite);
+    if (!this.looks('die')) {
 
-    if (this.sprite.body.blocked.down) {
-
-        if (this.sprite.body.blocked.right || this.sprite.body.blocked.left) {
-            this.sprite.body.position.y -= 16;
-        }
-
-        this.sprite.body.velocity.x = 0;
-        if (this.cursor.right.isDown) {
-            this.sprite.animations.play('walk');
-            this.sprite.body.velocity.x = this.speed;
-            this.sprite.scale.set(1,1);
-            playStepSFX();
-        }
-
-        if (this.cursor.left.isDown) {
-            this.sprite.animations.play('walk');
-            this.sprite.body.velocity.x = -this.speed;
-            this.sprite.scale.set(-1,1);
-            playStepSFX();
-        }
-
-        if (!this.cursor.left.isDown && !this.cursor.right.isDown) {
-            this.sprite.animations.play('stand');
-            if (treesBack && treesMid && treesFront) {
-                treesBack.tilePosition.x -= 0;
-                treesMid.tilePosition.x -= 0;
-                treesFront.tilePosition.x -= 0;
-            }
+        if (this.hunger <= 0) {
+            this.die();
         } else {
-            if (treesBack && treesMid && treesFront) {
-                treesBack.tilePosition.x -= paralaxSpeed[0] * this.sprite.scale.x;
-                treesMid.tilePosition.x -=  paralaxSpeed[1] * this.sprite.scale.x;
-                treesFront.tilePosition.x -=  paralaxSpeed[2] * this.sprite.scale.x;
+
+            this.hunger--;
+
+            if (this.sprite.body.blocked.down) {
+
+                if (this.sprite.body.blocked.right || this.sprite.body.blocked.left) {
+                    this.sprite.body.position.y -= 16;
+                }
+
+                this.sprite.body.velocity.x = 0;
+                if (this.cursor.right.isDown) {
+                    this.sprite.animations.play('walk');
+                    this.sprite.body.velocity.x = this.speed;
+                    this.sprite.scale.set(1,1);
+                    playStepSFX();
+                }
+
+                if (this.cursor.left.isDown) {
+                    this.sprite.animations.play('walk');
+                    this.sprite.body.velocity.x = -this.speed;
+                    this.sprite.scale.set(-1,1);
+                    playStepSFX();
+                }
+
+                if (!this.cursor.left.isDown && !this.cursor.right.isDown) {
+                    this.sprite.animations.play('stand');
+                    if (treesBack && treesMid && treesFront) {
+                        treesBack.tilePosition.x -= 0;
+                        treesMid.tilePosition.x -= 0;
+                        treesFront.tilePosition.x -= 0;
+                    }
+                } else {
+                    if (treesBack && treesMid && treesFront) {
+                        treesBack.tilePosition.x -= paralaxSpeed[0] * this.sprite.scale.x;
+                        treesMid.tilePosition.x -=  paralaxSpeed[1] * this.sprite.scale.x;
+                        treesFront.tilePosition.x -=  paralaxSpeed[2] * this.sprite.scale.x;
+                    }
+                }
+
+                if (this.cursor.up.isDown) {
+                    this.sprite.body.velocity.y = -this.jumpPower;
+                    this.sprite.body.velocity.x = this.speed*2 * this.sprite.scale.x;
+                    this.sprite.animations.play('jump');
+                }
+
+            }
+
+            if (this.sprite.body.velocity.y > 120 && !this.looks('jump')) {
+                this.sprite.animations.play('fall');
+            }
+
+            if (this.sprite.body.velocity.x == this.speed) {
+                this.hunger--;
+            } else if (this.sprite.body.velocity.x > this.speed) {
+                this.hunger -= 5;
             }
         }
-
-        if (this.cursor.up.isDown) {
-            this.sprite.body.velocity.y = -this.jumpPower;
-            this.sprite.body.velocity.x = this.speed*2 * this.sprite.scale.x;
-            this.sprite.animations.play('jump');
-        }
-
-    }
-
-    if (this.sprite.body.velocity.y > 120 && !this.looks('jump')) {
-        this.sprite.animations.play('fall');
     }
 
 };
