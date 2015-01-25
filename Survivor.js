@@ -52,6 +52,13 @@ Survivor.prototype.update = function () {
 
         if (!this.cursor.left.isDown && !this.cursor.right.isDown) {
             this.sprite.animations.play('stand');
+            treesBack.tilePosition.x -= 0;
+            treesMid.tilePosition.x -= 0;
+            treesFront.tilePosition.x -= 0;
+        } else {
+            treesBack.tilePosition.x -= paralaxSpeed[0] * this.sprite.scale.x;
+            treesMid.tilePosition.x -=  paralaxSpeed[1] * this.sprite.scale.x;
+            treesFront.tilePosition.x -=  paralaxSpeed[2] * this.sprite.scale.x;
         }
 
         if (this.cursor.up.isDown) {

@@ -1,4 +1,5 @@
 var x = true;
+var paralaxSpeed = [1, 1.2, 1.5];
 
 var SnowLevel = function (game) {
     this.game = game;
@@ -27,8 +28,12 @@ SnowLevel.prototype.preload = function () {
 
 SnowLevel.prototype.create = function () {
     treesBack = game.add.tileSprite(0, 150, 1280, 557, 'trees-back');
+    treesBack.fixedToCamera = true;
     treesMid = game.add.tileSprite(0, 150, 1280, 545, 'trees-mid');
+    treesMid.fixedToCamera = true;
     treesFront = game.add.tileSprite(0, 150, 1280, 533, 'trees-front');
+    treesFront.fixedToCamera = true;
+
     game.physics.startSystem(Phaser.Physics.ARCADE);
     this.world.create();
     game.stage.backgroundColor = '#eee';
@@ -46,9 +51,9 @@ SnowLevel.prototype.create = function () {
 };
 
 SnowLevel.prototype.update = function () {
-    treesBack.tilePosition.x -= 1;
-    treesMid.tilePosition.x -= 1.2;
-    treesFront.tilePosition.x -= 1.5;
+    // treesBack.tilePosition.x -= 1;
+    // treesMid.tilePosition.x -= 1.2;
+    // treesFront.tilePosition.x -= 1.5;
     this.stone.update();
     this.you.update();
     this.rabbit.update();
