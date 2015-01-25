@@ -36,9 +36,9 @@
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>json-array</string>
+        <string>json</string>
         <key>textureFileName</key>
-        <filename>../rabbit.png</filename>
+        <filename>../chracter1.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -145,7 +145,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../rabbit.json</filename>
+                <filename>../character1.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -180,7 +180,7 @@
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">None</enum>
+            <enum type="SpriteSettings::TrimMode">Trim</enum>
             <key>heuristicMask</key>
             <false/>
             <key>pivotPoint</key>
@@ -188,11 +188,11 @@
         </struct>
         <key>fileList</key>
         <array>
-            <filename>../bunnie/r-walk-1.png</filename>
-            <filename>../bunnie/r-walk-2.png</filename>
-            <filename>../bunnie/r-walk-3.png</filename>
-            <filename>../bunnie/r-walk-4.png</filename>
-            <filename>../bunnie/r-walk-5.png</filename>
+            <filename>jump</filename>
+            <filename>run</filename>
+            <filename>standby</filename>
+            <filename>walk</filename>
+            <filename>shoot</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
