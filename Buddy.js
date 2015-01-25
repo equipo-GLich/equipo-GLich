@@ -86,6 +86,7 @@ Buddy.prototype.update = function () {
 
     if (this.scared && !this.looks('die')) {
         if (this.monster.sprite.animations.currentAnim.currentFrame.name == 'c-shoot4.png') {
+            playGunSFX();
             this.die();
         }
     }
