@@ -9,7 +9,7 @@ var Survivor = function (world, spawnX, spawnY) {
 };
 
 Survivor.prototype.preload = function () {
-    game.load.atlasJSONHash('survivor', 'img/sprite/chracter1.png', 'img/sprite/character1.json');
+    game.load.atlasJSONHash('survivor', 'img/sprite/character1.png', 'img/sprite/character1.json');
     game.load.audio('stepsfx', ['sfx/snow_step.wav']);
 };
 
