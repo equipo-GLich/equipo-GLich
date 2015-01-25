@@ -14,8 +14,9 @@ Survivor.prototype.preload = function () {
 var stepsfx;
 Survivor.prototype.create = function () {
     this.sprite = game.add.sprite(this.spawnX, this.spawnY, 'survivor', 'c-jump1.png');
-
-    this.sprite.animations.add('jump', framesBetween(1,8, 'c-jump'), 7, false);
+    var jumpFrames = framesBetween(1,3, 'c-jump').concat(['c-jump4.png', 'c-jump4.png', 'c-jump4.png']).concat(framesBetween(4,8, 'c-jump'));
+    // this.sprite.animations.add('jump', framesBetween(1,8, 'c-jump'), 7, false);
+    this.sprite.animations.add('jump', jumpFrames, 10, false);
     this.sprite.animations.add('fall', framesBetween(4,5, 'c-jump'), 3, true);
     this.sprite.animations.add('run', framesBetween(1,9, 'c-run'), 15, true);
     this.sprite.animations.add('stand', framesBetween(1,4, 'c-stand'), 8, true);
@@ -73,6 +74,7 @@ Survivor.prototype.update = function () {
 
         if (this.cursor.up.isDown) {
             this.sprite.body.velocity.y = -this.jumpPower;
+            this.sprite.body.velocity.x = this.speed*1.8 * this.sprite.scale.x;
             this.sprite.animations.play('jump');
         }
 
