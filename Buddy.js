@@ -11,6 +11,7 @@ var Buddy = function (world, spawnX, spawnY, you) {
 Buddy.prototype.preload = function () {
     game.load.atlasJSONHash('buddy', 'img/sprite/character2.png', 'img/sprite/character2.json');
     game.load.audio('stepsfx', ['sfx/snow_step.wav']);
+    game.load.audio('jumpsfx', ['sfx/snow_jump.wav']);
 };
 
 var stepsfx;
@@ -33,6 +34,7 @@ Buddy.prototype.create = function () {
     this.sprite.body.setSize(50, 160);
     this.sprite.smoothed = false;
     stepsfx = game.add.audio('stepsfx');
+    jumpsfx = game.add.audio('jumpsfx');
 };
 
 Buddy.prototype.looks = function (action) {
@@ -71,6 +73,7 @@ Buddy.prototype.update = function () {
             this.sprite.body.velocity.y = -this.jumpPower;
             this.sprite.body.velocity.x = this.speed*2 * this.sprite.scale.x;
             this.sprite.animations.play('jump');
+            playJumpSFX();
         }
 
     }
@@ -99,5 +102,14 @@ Buddy.prototype.shouldJump = function () {
 playStepSFX = function () {
     if (!stepsfx.isPlaying){
         stepsfx.play();
+    }
+}
+
+playJumpSFX = function() {
+    if(!jumpsfx.isPlaying){
+        jumpsfx.play();
+    }
+    else{
+        jumpsfx.restart();
     }
 }
