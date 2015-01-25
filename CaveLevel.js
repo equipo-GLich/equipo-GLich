@@ -6,8 +6,8 @@ CaveLevel.prototype.preload = function () {
     this.world = new CaveMap();
     this.world.preload();
 
-    this.you = new Survivor(this.world, 200,200);
-    this.buddy = new Buddy(this.world, 254, 250, this.you);
+    this.you = new Survivor(this.world, 300,200);
+    this.buddy = new Buddy(this.world, 500, 250, this.you);
     this.you.preload();
     this.buddy.preload();
 };
@@ -29,5 +29,6 @@ CaveLevel.prototype.create = function () {
 
 CaveLevel.prototype.update = function () {
     this.you.update();
+    this.you.hm.update();
     this.buddy.update();
 };
