@@ -14,5 +14,5 @@ CaveMap.prototype.create = function () {
     this.floor = this.tilemap.createLayer('cave');
     // this.cave.resizeWorld();
     game.physics.arcade.enable(this.floor);
-    this.tilemap.setCollisionByExclusion([3,4], true, this.tilemap.platforms);
+    this.tilemap.setCollisionByExclusion([4], true, this.tilemap.platforms);
 };

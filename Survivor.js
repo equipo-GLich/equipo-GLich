@@ -4,6 +4,8 @@ var Survivor = function (world, spawnX, spawnY) {
     this.world = world;
     this.spawnX = spawnX;
     this.spawnY = spawnY;
+    this.maxHunger = 5000;
+    this.hunger = 0;
 };
 
 Survivor.prototype.preload = function () {
@@ -34,6 +36,7 @@ Survivor.prototype.looks = function (action) {
 };
 
 Survivor.prototype.update = function () {
+    this.hunger++;
     game.physics.arcade.collide(this.world.floor, this.sprite);
 
     if (this.sprite.body.blocked.down) {

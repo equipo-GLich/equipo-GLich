@@ -1,4 +1,5 @@
 var Buddy = function (world, spawnX, spawnY, you) {
+    this.maxDistance = 200;
     this.you = you;
     this.speed = 150;
     this.jumpPower = 190;
@@ -28,7 +29,8 @@ Buddy.prototype.create = function () {
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.acceleration.y = 481;
     this.sprite.anchor.set(1/2, 1/2);
-    this.sprite.scale.set(1.5, 1.5);
+    this.sprite.scale.set(1.1, 1.2);
+    this.sprite.body.setSize(50, 160);
     this.sprite.smoothed = false;
     stepsfx = game.add.audio('stepsfx');
 };
@@ -50,7 +52,7 @@ Buddy.prototype.update = function () {
         var myPosition = [this.sprite.x, this.sprite.y];
         var yourPosition = [this.you.sprite.x, this.you.sprite.y];
 
-        if (Dot.distance(myPosition, yourPosition) > 100) {
+        if (Dot.distance(myPosition, yourPosition) > this.maxDistance) {
             // I'm going to follow you.
             playStepSFX();
             this.sprite.animations.play('walk');
