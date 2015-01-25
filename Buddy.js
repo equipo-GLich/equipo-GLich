@@ -30,6 +30,7 @@ Buddy.prototype.preload = function () {
     game.load.atlasJSONHash('buddy', 'img/sprite/character2.png', 'img/sprite/character2.json');
     game.load.audio('stepsfx', ['sfx/snow_step.wav']);
     game.load.audio('jumpsfx', ['sfx/snow_jump.wav']);
+    game.load.audio('gunsfx',['sfx/gunshot.wav']);
 };
 
 var stepsfx;
@@ -57,6 +58,7 @@ Buddy.prototype.create = function () {
     this.sprite.smoothed = false;
     stepsfx = game.add.audio('stepsfx');
     jumpsfx = game.add.audio('jumpsfx');
+    gunsfx = game.add.audio('gunsfx');
 };
 
 Buddy.prototype.ohno = function (monster) {
@@ -165,5 +167,11 @@ playJumpSFX = function() {
     }
     else{
         jumpsfx.restart();
+    }
+}
+
+playGunSFX = function(){
+    if(!gunsfx.isPlaying){
+        gunsfx.play();
     }
 }

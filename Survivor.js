@@ -16,10 +16,13 @@ Survivor.prototype.preload = function () {
     game.load.audio('jumpsfx', ['sfx/snow_jump.wav']);
     game.load.audio('deathsfx', ['sfx/player_death.wav']);
     game.load.image('icon-food', 'img/icon-food.png');
+    game.load.audio('eatsfx',['sfx/player_eat.wav']);
+    game.load.audio('gunsfx',['sfx/gunshot.wav']);
 };
 
 Survivor.prototype.shoot = function () {
     this.sprite.animations.play('calmly-shoot');
+    playGunSFX();
 };
 
 Survivor.prototype.finalShoot = function () {
@@ -76,6 +79,8 @@ Survivor.prototype.create = function () {
     stepsfx = game.add.audio('stepsfx');
     jumpsfx = game.add.audio('jumpsfx');
     deathsfx = game.add.audio('deathsfx');
+    eatsfx = game.add.audio('eatsfx');
+    gunsfx = game.add.audio('gunsfx');
 };
 
 Survivor.prototype.looks = function (action) {
@@ -100,6 +105,7 @@ Survivor.prototype.update = function () {
 
     if (this.scared && !this.looks('die')) {
         if (this.monster.sprite.animations.currentAnim.currentFrame.name == 'c2-shoot4.png') {
+            playGunSFX();
             this.die();
         }
     }
@@ -200,6 +206,7 @@ playDeathSFX = function(){
 }
 
 Survivor.prototype.showFoodIcon = function() {
+    playEatSFX();
     food = game.add.sprite(this.sprite.x + 10, this.sprite.y - 100, 'icon-food');
     food.scale.x = 2;
     food.scale.y = 2;
@@ -209,4 +216,16 @@ Survivor.prototype.showFoodIcon = function() {
     foodTween.onComplete.add(function(food) {
         food.kill();
     }, this);
+}
+
+playEatSFX = function(){
+    if(!eatsfx.isPlaying){
+        eatsfx.play();
+    }
+}
+
+playGunSFX = function(){
+    if(!gunsfx.isPlaying){
+        gunsfx.play();
+    }
 }
