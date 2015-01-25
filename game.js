@@ -16,10 +16,15 @@ var logo;
 
 function preload() {
     game.load.image('logo', 'img/logo.png');
+    game.load.audio('splsfx', ['sfx/splash.wav']);
 }
 
+var music;
+var splsfx;
 function create() {
     logo = game.add.sprite(0, 0, 'logo');
+    splsfx = game.add.audio('splsfx');
+    splsfx.play();
     game.time.events.add(Phaser.Timer.SECOND * 2, fadeLogo, this);
 }
 

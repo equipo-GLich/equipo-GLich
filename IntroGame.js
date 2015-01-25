@@ -3,6 +3,7 @@ var IntroGame = function (game) {
 };
 
 IntroGame.prototype.preload = function() {
+    game.load.audio('bgm', ['bgm/BGM_1.mp3']);
 };
 
 IntroGame.prototype.create = function() {
@@ -20,6 +21,8 @@ IntroGame.prototype.create = function() {
         snowLevel = new SnowLevel(game);
         game.state.add('snow', snowLevel);
         game.state.start('snow');
+        music = game.add.audio('bgm');
+        music.play();
     }
 };
 
