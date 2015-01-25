@@ -89,5 +89,5 @@ IntroGame.prototype.update = function() {
 };
 
 IntroGame.prototype.render = function() {
-    game.debug.text("Intro Game", 32, 32);
+    //game.debug.text("Intro Game", 32, 32);
 };
