@@ -8,6 +8,7 @@ CaveLevel.prototype.preload = function () {
 
     this.you = new Survivor(this.world, 300,200);
     this.buddy = new Buddy(this.world, 500, 250, this.you);
+    this.you.buddy = this.buddy;
     this.you.preload();
     this.buddy.preload();
 };

@@ -1,4 +1,5 @@
 var Buddy = function (world, spawnX, spawnY, you) {
+    this.scared = false;
     this.frenzy = false;
     this.maxDistance = 150;
     this.you = you;
@@ -42,6 +43,8 @@ Buddy.prototype.create = function () {
     this.sprite.animations.add('run', framesBetween(1,9, 'c2-run'), 15, true);
     this.sprite.animations.add('stand', framesBetween(1,4, 'c2-stand'), 8, true);
     this.sprite.animations.add('walk', framesBetween(1, 8, 'c2-walk'), 8, true);
+    this.sprite.animations.add('die', framesBetween(2,4, 'c2-die'), 2, false);
+
     this.sprite.animations.add('calmly-shoot', framesBetween(1,4, 'c2-shoot'), 4, false);
     this.sprite.animations.add('crazy-shoot', ['c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot1.png', 'c2-shoot2.png', 'c2-shoot3.png', 'c2-shoot4.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png', 'c2-shoot1.png'], 12, false);
 
@@ -49,11 +52,27 @@ Buddy.prototype.create = function () {
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     this.sprite.body.acceleration.y = 481;
     this.sprite.anchor.set(1/2, 1/2);
-    this.sprite.scale.set(1.1, 1.2);
+    this.sprite.scale.set(1,1);
     this.sprite.body.setSize(50, 160);
     this.sprite.smoothed = false;
     stepsfx = game.add.audio('stepsfx');
     jumpsfx = game.add.audio('jumpsfx');
+};
+
+Buddy.prototype.ohno = function (monster) {
+    var d = this.sprite.x - monster.sprite.x;
+
+    this.scared = true;
+    this.monster = monster;
+    this.sprite.animations.play('walk', 2, true);
+
+    if (d < 0) {
+        this.sprite.scale.set(1,1);
+    } else {
+        this.sprite.scale.set(-1,1);
+    }
+
+    this.sprite.body.velocity.x = (this.speed/10) *this.sprite.scale.x *-1
 };
 
 Buddy.prototype.looks = function (action) {
@@ -63,7 +82,15 @@ Buddy.prototype.looks = function (action) {
 Buddy.prototype.update = function () {
     game.physics.arcade.collide(this.world.floor, this.sprite);
 
-    if (!this.frenzy) {
+    if (this.scared && !this.looks('die')) {
+        if (this.monster.sprite.animations.currentAnim.currentFrame.name == 'c-shoot4.png') {
+            this.die();
+        }
+    }
+
+    if (!(this.scared || this.frenzy) && !this.looks('die') &&
+        !((this.looks('calmly-shoot') || this.looks('crazy-shoot'))
+           && this.sprite.animations.currentAnim.isPlaying)) {
         if (this.sprite.body.blocked.down) {
 
             if (this.sprite.body.blocked.right || this.sprite.body.blocked.left) {
@@ -115,6 +142,14 @@ Buddy.prototype.shouldJump = function () {
 
     return !this.world.tilemap.getTile(x,y) && !this.world.tilemap.getTile(x,y+1);
 
+};
+
+Buddy.prototype.die = function () {
+    this.sprite.anchor.set(0,1);
+    this.sprite.position.y += this.sprite.height*.5;
+    this.sprite.animations.play('die');
+    this.sprite.body.velocity.x = 0;
+    playDeathSFX();
 };
 
 
