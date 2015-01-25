@@ -28,8 +28,10 @@ var Rabbit = function (x, y, level) {
 
 Rabbit.prototype.preload = function () {
     game.load.atlasJSONHash('rabbit', 'img/sprite/rabbit.png', 'img/sprite/rabbit.json');
+    game.load.audio('bunnySFX', ['sfx/bunny_jump.wav']);
 };
 
+var bunnysfx;
 Rabbit.prototype.create = function () {
     if (!this.sprite) {
         this.sprite = game.add.sprite(this.spawnX, this.spawnY, 'rabbit', 'r-alert1.png');
@@ -44,6 +46,7 @@ Rabbit.prototype.create = function () {
         game.physics.arcade.enable(this.sprite);
         // this.sprite.setSize(0.5*
         this.sprite.body.acceleration.y = 481;
+        bunnysfx = game.add.audio('bunnySFX');
     } else {
         this.sprite.reset(this.spawnX, this.spawnY);
     }
@@ -107,4 +110,15 @@ Rabbit.prototype.jump = function () {
         this.sprite.scale.set(-1,1);
     }
 
+    playBunnySFX();
+
 };
+
+playBunnySFX = function() {
+    if(!bunnysfx.isPlaying){
+        bunnysfx.play();
+    }
+    else{
+        bunnysfx.restart();
+    }
+}
