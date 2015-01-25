@@ -1,15 +1,15 @@
 var randomBetween = function (max, min) {
-    return Math.random() * (max-min+1) + min;
+    return Math.random() * (max-min) + min;
 };
 
 var Rabbit = function (x, y, level) {
     this.fearDistance = 100;
 
     this.calm = {
-        iddleLimit : 100,
+        iddleLimit : 200,
         iddleCounter : 0,
         jumpForce : 120,
-        speed : 50
+        speed : 150
     };
 
     this.scared = {
@@ -33,9 +33,13 @@ Rabbit.prototype.preload = function () {
 Rabbit.prototype.create = function () {
     if (!this.sprite) {
         this.sprite = game.add.sprite(this.spawnX, this.spawnY, 'rabbit', 'r-alert1.png');
+        this.sprite.anchor.set(.5,.5);
         // rabbit animation
         this.sprite.animations.add('alert', framesBetween(1,2, 'r-alert'), 3, true);
-        this.sprite.animations.add('walk', framesBetween(3,5, 'r-walk'), 6, true);
+        // var frames = framesBetween(1,5, 'r-walk').concat(framesBetween(5,1, 'r-walk'));
+        var frames = framesBetween(1,5, 'r-walk');
+        this.sprite.animations.add('walk', frames, 10, false);
+
         this.sprite.animations.play('alert');
         game.physics.arcade.enable(this.sprite);
         this.sprite.body.acceleration.y = 481;
@@ -57,6 +61,7 @@ Rabbit.prototype.update = function () {
         this.jump()
     } else if (this.sprite.body.blocked.down) {
         this.sprite.body.velocity.x = 0;
+        this.sprite.animations.play('alert');
     }
 
     // the bunny can get scared thanks to this.
@@ -69,21 +74,30 @@ Rabbit.prototype.update = function () {
 
 Rabbit.prototype.jump = function () {
     var direction;
+    var modifier = 1;
+
     this.sprite.animations.play('walk');
     if (this.state == this.scared) {
         direction = randomBetween(-1,5);
         if (direction <= 0) {
             // won't wait too much until fleeing away.
+            modifier = .6;
             this.state.iddleCounter = this.state.iddleLimit;
-            this.sprite.body.velocity.y = -this.state.jumpForce * .6;
-            this.sprite.body.velocity.x = this.state.speed * direction * .6;
-            this.sprite.scale.set(1,1);
+        } else {
+            direction = 1;
         }
     } else {
         direction = randomBetween(-1,1);
-        this.sprite.scale.set(-1,1);
     }
 
-    this.sprite.body.velocity.y = -this.state.jumpForce;
-    this.sprite.body.velocity.x = this.state.speed * direction;
+    this.sprite.body.velocity.y = -this.state.jumpForce * modifier;
+    this.sprite.body.velocity.x = this.state.speed * direction * modifier;
+
+    if (direction < 0) {
+        this.sprite.scale.set(1,1);
+        console.log('izquierda');
+    } else {
+        this.sprite.scale.set(-1,1);
+        console.log('derecha');
+    }
 };
