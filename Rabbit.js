@@ -58,6 +58,7 @@ Rabbit.prototype.update = function () {
 
         r.kill();
         sl.you.hunger += 1000;
+        sl.you.showFoodIcon();
     });
 
     if (this.sprite.alive) {

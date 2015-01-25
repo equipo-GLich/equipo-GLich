@@ -14,6 +14,7 @@ Survivor.prototype.preload = function () {
     game.load.audio('stepsfx', ['sfx/snow_step.wav']);
     game.load.audio('jumpsfx', ['sfx/snow_jump.wav']);
     game.load.audio('deathsfx', ['sfx/player_death.wav']);
+    game.load.image('icon-food', 'img/icon-food.png');
 };
 
 Survivor.prototype.shoot = function () {
@@ -179,4 +180,16 @@ playDeathSFX = function(){
     if(!deathsfx.isPlaying){
         deathsfx.play();
     }
+}
+
+Survivor.prototype.showFoodIcon = function() {
+    food = game.add.sprite(this.sprite.x + 10, this.sprite.y - 100, 'icon-food');
+    food.scale.x = 2;
+    food.scale.y = 2;
+    var foodTween = game.add.tween(food);
+    foodTween.to({alpha: 0, x:this.sprite.x-100, y:this.sprite.y-200}, 1500, Phaser.Easing.Linear.None, true);
+    foodTween.start();
+    foodTween.onComplete.add(function(food) {
+        food.kill();
+    }, this);
 }
