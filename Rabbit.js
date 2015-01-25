@@ -13,10 +13,10 @@ var Rabbit = function (x, y, level) {
     };
 
     this.scared = {
-        iddleLimit : 25,
+        iddleLimit : 30,
         iddleCounter : 50,
         jumpForce : 90,
-        speed : 150
+        speed : 400
     };
 
     this.state = this.calm;
@@ -95,9 +95,7 @@ Rabbit.prototype.jump = function () {
 
     if (direction < 0) {
         this.sprite.scale.set(1,1);
-        console.log('izquierda');
     } else {
         this.sprite.scale.set(-1,1);
-        console.log('derecha');
     }
 };

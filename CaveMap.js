@@ -1,0 +1,18 @@
+var CaveMap = function () {
+
+};
+
+CaveMap.prototype.preload = function () {
+    game.load.tilemap( 'cave', 'img/map/cave.json',
+                       null, Phaser.Tilemap.TILED_JSON );
+    game.load.image( 'cave', 'img/map/tileset.png' );
+};
+
+CaveMap.prototype.create = function () {
+    this.tilemap = game.add.tilemap('cave', 59*16, 37*16, 16, 16);
+    this.tilemap.addTilesetImage('cave');
+    this.floor = this.tilemap.createLayer('cave');
+    // this.cave.resizeWorld();
+    game.physics.arcade.enable(this.floor);
+    this.tilemap.setCollisionByExclusion([3,4], true, this.tilemap.platforms);
+};

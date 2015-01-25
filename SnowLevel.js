@@ -14,7 +14,7 @@ SnowLevel.prototype.preload = function () {
     this.world = new SnowMap(game);
     this.world.preload();
 
-    this.you = new Survivor(this.world);
+    this.you = new Survivor(this.world, 150, 400);
     this.you.preload();
 
     this.rabbit = new Rabbit(400,400, this);

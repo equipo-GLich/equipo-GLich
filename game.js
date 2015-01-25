@@ -1,9 +1,15 @@
-// uncomment this for jumping the intro (*)
-// for debugging purposes...
+// uncomment this to jump to the cave level
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game');
-var sl = new SnowLevel(game);
-game.state.add('sl', sl);
-game.state.start('sl');
+var caveLevel = new CaveLevel();
+game.state.add('caveLevel', caveLevel);
+game.state.start('caveLevel');
+
+// // uncomment this to jump the intro (*)
+// // for debugging purposes...
+// var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game');
+// var sl = new SnowLevel(game);
+// game.state.add('sl', sl);
+// game.state.start('sl');
 
 // // (*) and comment this
 // var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'game', {

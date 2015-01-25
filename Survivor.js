@@ -1,8 +1,9 @@
-var Survivor = function (world, cursor) {
+var Survivor = function (world, spawnX, spawnY) {
     this.speed = 150;
     this.jumpPower = 200;
     this.world = world;
-    this.cursor = cursor;
+    this.spawnX = spawnX;
+    this.spawnY = spawnY;
 };
 
 Survivor.prototype.preload = function () {
@@ -12,7 +13,7 @@ Survivor.prototype.preload = function () {
 
 var stepsfx;
 Survivor.prototype.create = function () {
-    this.sprite = game.add.sprite(150, 400, 'survivor', 'c-jump1.png');
+    this.sprite = game.add.sprite(this.spawnX, this.spawnY, 'survivor', 'c-jump1.png');
 
     this.sprite.animations.add('jump', framesBetween(1,8, 'c-jump'), 7, false);
     this.sprite.animations.add('fall', framesBetween(4,5, 'c-jump'), 3, true);
@@ -35,6 +36,11 @@ Survivor.prototype.update = function () {
     game.physics.arcade.collide(this.world.floor, this.sprite);
 
     if (this.sprite.body.blocked.down) {
+
+        if (this.sprite.body.blocked.right) {
+            this.sprite.body.position.y -= 16;
+        }
+
         this.sprite.body.velocity.x = 0;
         if (this.cursor.right.isDown) {
             this.sprite.animations.play('walk');
@@ -52,13 +58,17 @@ Survivor.prototype.update = function () {
 
         if (!this.cursor.left.isDown && !this.cursor.right.isDown) {
             this.sprite.animations.play('stand');
-            treesBack.tilePosition.x -= 0;
-            treesMid.tilePosition.x -= 0;
-            treesFront.tilePosition.x -= 0;
+            if (treesBack && treesMid && treesFront) {
+                treesBack.tilePosition.x -= 0;
+                treesMid.tilePosition.x -= 0;
+                treesFront.tilePosition.x -= 0;
+            }
         } else {
-            treesBack.tilePosition.x -= paralaxSpeed[0] * this.sprite.scale.x;
-            treesMid.tilePosition.x -=  paralaxSpeed[1] * this.sprite.scale.x;
-            treesFront.tilePosition.x -=  paralaxSpeed[2] * this.sprite.scale.x;
+            if (treesBack && treesMid && treesFront) {
+                treesBack.tilePosition.x -= paralaxSpeed[0] * this.sprite.scale.x;
+                treesMid.tilePosition.x -=  paralaxSpeed[1] * this.sprite.scale.x;
+                treesFront.tilePosition.x -=  paralaxSpeed[2] * this.sprite.scale.x;
+            }
         }
 
         if (this.cursor.up.isDown) {
@@ -68,7 +78,7 @@ Survivor.prototype.update = function () {
 
     }
 
-    if (!this.sprite.body.blocked.down && !this.looks('jump')) {
+    if (this.sprite.body.velocity.y > 120 && !this.looks('jump')) {
         this.sprite.animations.play('fall');
     }
 
