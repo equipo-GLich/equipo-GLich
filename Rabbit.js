@@ -50,30 +50,39 @@ Rabbit.prototype.create = function () {
 };
 
 Rabbit.prototype.update = function () {
-    game.physics.arcade.collide(this.level.world.floor, this.sprite);
-    this.state.iddleCounter++;
 
-    if (this.state.iddleCounter >= this.state.iddleLimit &&
-        // this prevents the rabbit jumping in the air.
-        this.sprite.body.blocked.down) {
-        this.state.iddleCounter = 0;
+    game.physics.arcade.collide(this.sprite, this.level.you.sprite, function (r, p) {
 
-        // jumps according to the rabbit this.state
-        this.jump()
-    } else if (this.sprite.body.blocked.down) {
-        this.sprite.body.velocity.x = 0;
-        this.sprite.animations.play('alert');
-    }
+        r.kill();
+        sl.you.hunger += 1000;
+    });
 
-    // the bunny can get scared thanks to this.
-    if (Dot.distance([this.sprite.x, this.sprite.y],
-                     [this.level.you.sprite.x, this.level.you.sprite.y]) < this.fearDistance) {
-        this.state = this.scared;
-    }
+    if (this.sprite.alive) {
+        game.physics.arcade.collide(this.level.world.floor, this.sprite);
+        this.state.iddleCounter++;
 
-    if (this.sprite.body.blocked.right) {
-        this.sprite.position.y -= 16;
-        this.sprite.body.velocity.x = this.state.speed * this.sprite.scale.x*-1;
+        if (this.state.iddleCounter >= this.state.iddleLimit &&
+            // this prevents the rabbit jumping in the air.
+            this.sprite.body.blocked.down) {
+            this.state.iddleCounter = 0;
+
+            // jumps according to the rabbit this.state
+            this.jump()
+        } else if (this.sprite.body.blocked.down) {
+            this.sprite.body.velocity.x = 0;
+            this.sprite.animations.play('alert');
+        }
+
+        // the bunny can get scared thanks to this.
+        if (Dot.distance([this.sprite.x, this.sprite.y],
+                         [this.level.you.sprite.x, this.level.you.sprite.y]) < this.fearDistance) {
+            this.state = this.scared;
+        }
+
+        if (this.sprite.body.blocked.right) {
+            this.sprite.position.y -= 16;
+            this.sprite.body.velocity.x = this.state.speed * this.sprite.scale.x*-1;
+        }
     }
 
 };

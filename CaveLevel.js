@@ -21,6 +21,7 @@ CaveLevel.prototype.create = function () {
 
     cursor = game.input.keyboard.createCursorKeys();
     cursor.throwStone = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    cursor.attack = game.input.keyboard.addKey(Phaser.Keyboard.A);
     this.you.cursor = cursor;
     this.buddy.cursor = cursor;
     this.you.hm = new HungerMeter(this.you, 100,100);
@@ -31,4 +32,8 @@ CaveLevel.prototype.update = function () {
     this.you.update();
     this.you.hm.update();
     this.buddy.update();
+
+    if (this.you.hunger < 400 && !this.you.scared) {
+        this.buddy.finalShoot();
+    }
 };
