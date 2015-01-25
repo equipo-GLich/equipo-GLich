@@ -10,6 +10,7 @@ var treesMid;
 var treesFront;
 
 SnowLevel.prototype.preload = function () {
+    game.load.spritesheet('landslide', 'img/map/snow.png', 16, 16);
     this.input.keyboard.onDownCallback = null;
     this.world = new SnowMap(game);
     this.world.preload();

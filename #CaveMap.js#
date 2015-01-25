@@ -17,6 +17,4 @@ CaveMap.prototype.create = function () {
     this.tilemap.setCollisionByExclusion([4], true, this.tilemap.platforms);
 };
 
-CaveLevel.prototype.landslide = function () {
 
-};

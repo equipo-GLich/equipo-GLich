@@ -17,3 +17,15 @@ SnowMap.prototype.create = function () {
     this.game.physics.arcade.enable(this.floor);
     this.tilemap.setCollisionByExclusion([], true, this.floor);
 };
+
+SnowMap.prototype.landslide = function () {
+    this.landslides = game.add.group();
+    this.tilemap.createFromTiles([3,4], -1, 'landslide', this.landslides, this.floor);
+    this.landslides.forEach( function (sprite) {
+        sprite.animations.add('collapse', [2,3,4,5], 5, false);
+        sprite.update = function () {
+
+        };
+    });
+
+};
