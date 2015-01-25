@@ -11,7 +11,8 @@ IntroGame.prototype.preload = function() {
     game.load.image('plane', 'img/plane.png');
     game.load.image('fire', 'img/fire.png');
     game.load.image('smoke', 'img/smoke.png');
-    game.load.atlasJSONHash('survivor', 'img/sprite/chracter1.png', 'img/sprite/character1.json');
+    game.load.atlasJSONHash('survivor1', 'img/sprite/character1.png', 'img/sprite/character1.json');
+    game.load.atlasJSONHash('survivor2', 'img/sprite/character2.png', 'img/sprite/character2.json');
     game.load.image('juan', 'img/juan.png');
     game.load.image('press-any-button', 'img/press-any-button.png');
 };
@@ -59,7 +60,8 @@ IntroGame.prototype.create = function() {
     fireTween3.loop().start();
 
 
-    survivor = game.add.sprite(800, 400, 'survivor', 'c-jump1.png');
+    survivor1 = game.add.sprite(800, 400, 'survivor1', 'c-jump1.png');
+    survivor2 = game.add.sprite(650, 400, 'survivor2', 'c2-jump1.png');
     var text = "PRESS ANY KEY TO START";
     var style = {
         font: "65px Arial",

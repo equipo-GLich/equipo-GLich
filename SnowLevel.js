@@ -8,6 +8,7 @@ var SnowLevel = function (game) {
 var treesBack;
 var treesMid;
 var treesFront;
+var bunnies = [];
 
 SnowLevel.prototype.preload = function () {
     game.load.spritesheet('landslide', 'img/map/snow.png', 16, 16);
@@ -20,6 +21,13 @@ SnowLevel.prototype.preload = function () {
 
     this.buddy = new Buddy(this.world, 300, 500, this.you);
     this.buddy.preload();
+
+    //Create bunny array
+    
+    for (var i = 0; i < 10; i++) {
+        bunnies[i] = new Rabbit(400 + (i*randomBetween(3,10)*100), 400, this);
+        bunnies[i].preload();
+    }
 
     this.rabbit = new Rabbit(400,400, this);
     this.rabbit.preload();
@@ -58,6 +66,9 @@ SnowLevel.prototype.create = function () {
 
     this.you.cursor = this.cursor;
     this.buddy.cursor = this.cursor;
+    for (var i = 0; i < 10; i++) {
+        bunnies[i].create();
+    }
     this.rabbit.create();
     this.r2.create();
     this.stone = new Stone(this);
@@ -75,6 +86,9 @@ SnowLevel.prototype.update = function () {
     this.you.hungerMeter.update();
     this.buddy.update();
 
+    for (var i = 0; i < 10; i++) {
+        bunnies[i].update();
+    }
     this.rabbit.update();
     this.r2.update();
     this.stone.update();

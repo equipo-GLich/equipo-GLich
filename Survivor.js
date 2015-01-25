@@ -12,6 +12,9 @@ var Survivor = function (world, spawnX, spawnY) {
 Survivor.prototype.preload = function () {
     game.load.atlasJSONHash('survivor', 'img/sprite/character1.png', 'img/sprite/character1.json');
     game.load.audio('stepsfx', ['sfx/snow_step.wav']);
+    game.load.audio('jumpsfx', ['sfx/snow_jump.wav']);
+    game.load.audio('deathsfx', ['sfx/player_death.wav']);
+    game.load.image('icon-food', 'img/icon-food.png');
 };
 
 Survivor.prototype.shoot = function () {
@@ -59,6 +62,8 @@ Survivor.prototype.create = function () {
     this.sprite.body.acceleration.y = 481;
     this.sprite.anchor.set(1/2, 1/2);
     stepsfx = game.add.audio('stepsfx');
+    jumpsfx = game.add.audio('jumpsfx');
+    deathsfx = game.add.audio('deathsfx');
 };
 
 Survivor.prototype.looks = function (action) {
@@ -70,6 +75,7 @@ Survivor.prototype.die = function () {
     this.sprite.position.y += this.sprite.height*.5;
     this.sprite.animations.play('die');
     this.sprite.body.velocity.x = 0;
+    playDeathSFX();
 };
 
 
@@ -136,6 +142,7 @@ Survivor.prototype.update = function () {
                     this.sprite.body.velocity.y = -this.jumpPower;
                     this.sprite.body.velocity.x = this.speed*2 * this.sprite.scale.x;
                     this.sprite.animations.play('jump');
+                    playJumpSFX();
                 }
 
             }
@@ -158,4 +165,31 @@ playStepSFX = function () {
     if (!stepsfx.isPlaying){
         stepsfx.play();
     }
+}
+
+playJumpSFX = function() {
+    if(!jumpsfx.isPlaying){
+        jumpsfx.play();
+    }
+    else{
+        jumpsfx.restart();
+    }
+}
+
+playDeathSFX = function(){
+    if(!deathsfx.isPlaying){
+        deathsfx.play();
+    }
+}
+
+Survivor.prototype.showFoodIcon = function() {
+    food = game.add.sprite(this.sprite.x + 10, this.sprite.y - 100, 'icon-food');
+    food.scale.x = 2;
+    food.scale.y = 2;
+    var foodTween = game.add.tween(food);
+    foodTween.to({alpha: 0, x:this.sprite.x-100, y:this.sprite.y-200}, 1500, Phaser.Easing.Linear.None, true);
+    foodTween.start();
+    foodTween.onComplete.add(function(food) {
+        food.kill();
+    }, this);
 }
