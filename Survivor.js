@@ -5,7 +5,7 @@ var Survivor = function (world, spawnX, spawnY) {
     this.world = world;
     this.spawnX = spawnX;
     this.spawnY = spawnY;
-    this.hunger = 700;
+    this.hunger = 9000;
     this.scared = false;
 };
 

@@ -9,21 +9,21 @@ var Buddy = function (world, spawnX, spawnY, you) {
 };
 
 Buddy.prototype.preload = function () {
-    game.load.atlasJSONHash('survivor', 'img/sprite/chracter1.png', 'img/sprite/character1.json');
+    game.load.atlasJSONHash('buddy', 'img/sprite/character2.png', 'img/sprite/character2.json');
     game.load.audio('stepsfx', ['sfx/snow_step.wav']);
 };
 
 var stepsfx;
 Buddy.prototype.create = function () {
-    this.sprite = game.add.sprite(this.spawnX, this.spawnY, 'survivor', 'c-jump1.png');
+    this.sprite = game.add.sprite(this.spawnX, this.spawnY, 'buddy', 'c2-jump1.png');
     // this.sprite.tint = 0x775555;
-    var jumpFrames = framesBetween(1,3, 'c-jump').concat(['c-jump4.png', 'c-jump4.png', 'c-jump4.png']).concat(framesBetween(4,8, 'c-jump'));
-    // this.sprite.animations.add('jump', framesBetween(1,8, 'c-jump'), 7, false);
+    var jumpFrames = framesBetween(1,3, 'c2-jump').concat(['c2-jump4.png', 'c2-jump4.png', 'c2-jump4.png']).concat(framesBetween(4,8, 'c2-jump'));
+    // this.sprite.animations.add('jump', framesBetween(1,8, 'c2-jump'), 7, false);
     this.sprite.animations.add('jump', jumpFrames, 10, false);
-    this.sprite.animations.add('fall', framesBetween(4,5, 'c-jump'), 3, true);
-    this.sprite.animations.add('run', framesBetween(1,9, 'c-run'), 15, true);
-    this.sprite.animations.add('stand', framesBetween(1,4, 'c-stand'), 8, true);
-    this.sprite.animations.add('walk', framesBetween(1, 8, 'c-walk'), 8, true);
+    this.sprite.animations.add('fall', framesBetween(4,5, 'c2-jump'), 3, true);
+    this.sprite.animations.add('run', framesBetween(1,9, 'c2-run'), 15, true);
+    this.sprite.animations.add('stand', framesBetween(1,4, 'c2-stand'), 8, true);
+    this.sprite.animations.add('walk', framesBetween(1, 8, 'c2-walk'), 8, true);
 
     this.sprite.animations.play('fall');
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
@@ -67,7 +67,7 @@ Buddy.prototype.update = function () {
             this.sprite.animations.play('stand');
         }
 
-        if (this.cursor.up.isDown) {
+        if (this.shouldJump()) {
             this.sprite.body.velocity.y = -this.jumpPower;
             this.sprite.body.velocity.x = this.speed*2 * this.sprite.scale.x;
             this.sprite.animations.play('jump');
@@ -80,6 +80,21 @@ Buddy.prototype.update = function () {
     }
 
 };
+
+Buddy.prototype.shouldJump = function () {
+    var x = Math.round(this.sprite.x/16);
+    var y = Math.round((this.sprite.y + this.sprite.anchor.y*this.sprite.height)/16);
+
+    if (this.sprite.scale.x < 0) {
+        x--;
+    } else {
+        x++;
+    }
+
+    return !this.world.tilemap.getTile(x,y) && !this.world.tilemap.getTile(x,y+1);
+
+};
+
 
 playStepSFX = function () {
     if (!stepsfx.isPlaying){
